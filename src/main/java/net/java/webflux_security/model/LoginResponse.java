@@ -10,11 +10,13 @@ import lombok.Setter;
 public class LoginResponse {
 	
 	private String token;
+	private String email;
 
 	@Override
 	public String toString() {
 		return "LoginResponse{" +
 				"token='" + token + '\'' +
+				"email='" + email + '\'' +
 				'}';
 	}
 }

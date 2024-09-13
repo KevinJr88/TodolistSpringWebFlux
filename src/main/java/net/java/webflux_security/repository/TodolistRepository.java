@@ -18,6 +18,8 @@ public interface TodolistRepository extends R2dbcRepository<Todolist, Long> {
     Mono<Long> countByStatus(String status);
     @Query("SELECT COUNT(*) FROM todolist" )
     Mono<Long> countAll();
+    @Query("SELECT * FROM todolist WHERE task LIKE '%' || :task || '%'")
+    Flux<Todolist> findAllByTaskContaining(String task);
     @Query("SELECT * FROM todolist ORDER BY todolist.id DESC LIMIT :pageSize OFFSET :offset")
     Flux<Todolist> findAllPagination(int offset, int pageSize);
 }

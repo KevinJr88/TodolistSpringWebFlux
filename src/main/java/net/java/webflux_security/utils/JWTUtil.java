@@ -23,7 +23,7 @@ public class JWTUtil implements Serializable {
 	@Value("${springbootwebflux.jjwt.secret}")
 	private String secret;
 	
-	@Value("30000")
+	@Value("300")
 	private String expirationTime;
 	public Claims getAllClaimsFromToken(String token) {
 		return Jwts.parser()

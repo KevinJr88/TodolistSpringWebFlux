@@ -25,6 +25,10 @@ public class TodolistService {
         return todolistRepository.findAllByTaskContainingAndStatus(task, status);
     }
 
+    public Flux<Todolist> findByTaskContaining(String task) {
+        return todolistRepository.findAllByTaskContaining(task);
+    }
+
 
     public Flux<Todolist> findAllByStatus(String status, int offset, int pageSize){
 //        PageRequest pageRequest = PageRequest.of(offset, pageSize, Sort.by(Sort.Direction.DESC, "id"));

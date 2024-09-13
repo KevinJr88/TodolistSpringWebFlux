@@ -5,6 +5,7 @@ import net.java.webflux_security.model.Todolist;
 import net.java.webflux_security.service.TodolistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -26,9 +27,15 @@ public class TodolistController {
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping ("/search")
     @ResponseStatus(HttpStatus.OK)
-    public Flux<Todolist> getTodolistByTask(@RequestBody Todolist todolistRequest) {
+    public Flux<Todolist> getTodolistByTaskAndStatus(@RequestBody Todolist todolistRequest) {
          return todolistService.findByTaskAndStatusContaining(todolistRequest.getTask(), todolistRequest.getStatus());
+    }
 
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PostMapping ("/search/all")
+    @ResponseStatus(HttpStatus.OK)
+    public Flux<Todolist> getTodolistByTask(@RequestBody Todolist todolistRequest) {
+        return todolistService.findByTaskContaining(todolistRequest.getTask());
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
@@ -43,11 +50,13 @@ public class TodolistController {
         return todolistService.findAllByStatus(status, offset, pagesize);
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping
     public Flux<Todolist> getTodolist() {
         return  todolistService.findAll();
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/{id}")
     public Mono<Todolist> getTodolistById(@PathVariable("id") Long id) {
         return  todolistService.findById(id);
@@ -65,33 +74,22 @@ public class TodolistController {
         return todolistService.deleteById(id);
     }
 
-//    @GetMapping("/sort/{field}")
-//    private Flux<Todolist> getProductsWithSort(@PathVariable String field) {
-//        List<Todolist> allProducts = todolistService.findTodolistWithSorting(field);
-//        return new APIResponse<>(allProducts.size(), allProducts);
-//    }
-
-
-//    @GetMapping("/paginationAndSort/{offset}/{pageSize}/{field}")
-//    private APIResponse<Page<Todolist>> getProductsWithPaginationAndSort(@PathVariable int offset, @PathVariable int pageSize,@PathVariable String field) {
-//        Page<Todolist> todolistWithPagination = todolistService.findTodolistWithPaginationAndSorting(offset, pageSize, field);
-//        return new APIResponse<>(todolistWithPagination.getSize(), todolistWithPagination);
-//    }
-
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/{offset}/{pageSize}")
     private Flux<Todolist> getTodolistWithPagination(@PathVariable int offset, @PathVariable int pageSize) {
         return todolistService.findTodolistWithPagination(offset, pageSize);
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/count/{status}")
     private Mono<Long> getCountData(@PathVariable String status){
         return  todolistService.countByStatus(status);
-
     }
+
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/count")
     private Mono<Long> getCountAll(){
         return  todolistService.countAll();
-
     }
 
 }
