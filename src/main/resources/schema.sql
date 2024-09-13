@@ -12,4 +12,4 @@ CREATE TABLE IF NOT EXISTS userdata
 TRUNCATE userdata RESTART IDENTITY;
 
 INSERT INTO userdata (first_name, last_name, password, address, email,  roles)
-VALUES ('mahade','hassan', 'yUIixNNy9y/I3Y3goS4IDOtklaJmm8QNAUv2cpwXOE8=', 'Bangladesh', 'abc.test@abc.com', '{"ROLE_USER"}');
+VALUES ('Kevin','Rahadinata', 'yUIixNNy9y/I3Y3goS4IDOtklaJmm8QNAUv2cpwXOE8=', 'Jl Suryo', 'kevin777@gmail.com', '{"ROLE_USER"}');
