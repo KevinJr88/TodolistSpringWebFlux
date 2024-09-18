@@ -1,0 +1,1098 @@
+{
+	"info": {
+		"_postman_id": "70edaa92-597c-41b0-a06c-2358542aaaf7",
+		"name": "Simple-todolist-projects",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38199187"
+	},
+	"item": [
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"email\" : \"erwin@gmail.com\",\r\n    \"password\" : \"123456\",\r\n    \"firstName\" : \"Erwin\",\r\n    \"lastName\" :\"Gaming\",\r\n    \"roles\" : [\"ROLE_USER\", \"ROLE_ADMIN\"],\r\n    \"address\": \"Jl Peningkatan 1\", \r\n    \"enabled\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"email\" : \"kevinjr@gmail.com\",\r\n    \"password\" : \"123456\",\r\n    \"firstName\" : \"Kevin\",\r\n    \"lastName\" :\"Rahadinata\",\r\n    \"roles\" : [\"ROLE_USER\"],\r\n    \"address\": \"Jl Peningkatan 1\", \r\n    \"enabled\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"erwin@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"kevinjr@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllTodolist",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NjI0ODI0LCJleHAiOjE3MjY2MjUxMjR9.t1HfXjS7YNIPHqZ1oYeys6QqJDYLJg71_gIsOQYLmSrPm1L_PK4CYC2eWa0DixJv",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/todolist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todolist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NDc5MTc3LCJleHAiOjE3MjY0Nzk0Nzd9.qD1u2ti5OJrdh5r3OdkVEz7ADUG7z7Baa5lkEfvWJwMdBhSUoUcXQDGtGVkBQIsi",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/todolist/14",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todolist",
+						"14"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTodolistByStatus",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJrZXZpbmpyQGdtYWlsLmNvbSIsImlhdCI6MTcyNjAyMDI4OSwiZXhwIjoxNzI2MDUwMjg5fQ.FWZksi3foFP2VOAaCaSck_MI_Da3Zk6KpBfFw_3z6A7bRGwxfdnhy34FALKlLlX5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\":\"Uncompleted\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/todolist/filter/Uncompleted",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todolist",
+						"filter",
+						"Uncompleted"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllPagination",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NjI0ODI0LCJleHAiOjE3MjY2MjUxMjR9.t1HfXjS7YNIPHqZ1oYeys6QqJDYLJg71_gIsOQYLmSrPm1L_PK4CYC2eWa0DixJv",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/todolist/0/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todolist",
+						"0",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllPaginationByStatus",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NjMxNzc0LCJleHAiOjE3MjY2MzIwNzR9.WvSJya7mxmRX-ZPimvCWGJIqJWH4bITskjjMi8FJu6EpY3faazzOfNWV1fTyMZDy",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/todolist/Uncompleted/0/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todolist",
+						"Uncompleted",
+						"0",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTodolistByTask",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NDgwMjE2LCJleHAiOjE3MjY0ODA1MTZ9.UmkgQDgHN1o3hYtHVYee_v-XrzkZPC8hkwY9dUWfurT_q7HraRse9MkjOfR8IMnY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task\":\"Me\",\r\n    \"status\": \"Uncompleted\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/todolist/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todolist",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateTodolist",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NjMxNzc0LCJleHAiOjE3MjY2MzIwNzR9.WvSJya7mxmRX-ZPimvCWGJIqJWH4bITskjjMi8FJu6EpY3faazzOfNWV1fTyMZDy",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task\":\"Mendengarkan musik\",\r\n    \"note\":\"Buku Pelajaran Matematika Kelas 2 SMA\",\r\n    \"status\":\"Uncompleted\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/todolist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todolist"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateTodolistById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NDgxNTA0LCJleHAiOjE3MjY0ODE4MDR9.h-xY1xuOE0MPOP2l4WO-8K11PDfgvaHK_cjnNw9Yhy0Hn5qiC5gZMrVoe3MCy4s5",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task\":\"Menonton Televisi\",\r\n    \"note\":\"nonton film naruto\",\r\n    \"status\":\"Completed\",\r\n    \"email\": \"erwin@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/todolist/14",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todolist",
+						"14"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteTodolist",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NDc5ODYyLCJleHAiOjE3MjY0ODAxNjJ9.q1ZqkMlx7uy9lgk7055ZT4jBXp0OK8r2t4ZhEicnzwM80JykSgqnN63QGEEQ3iwD",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/todolist/15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todolist",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCountTodolistByStatus",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NjMzMDU3LCJleHAiOjE3MjY2MzMzNTd9.IQR3qsR91LtyFxLWcJUQUDGPasQj1YDdISvxnVJk0Ub8Yg532vwIvAxItvHkXKkT",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/todolist/count/Completed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todolist",
+						"count",
+						"Completed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCountTodolist",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NjMzNzMxLCJleHAiOjE3MjY2MzQwMzF9.xjgpN54Ioq2K2VPYPXFWa9WYecl8JAysFxr7QvQ6k8sFFp7_EmtHsmfq-iH4hyQY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/todolist/count",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"todolist",
+						"count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddUserReadAccess",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NTAyMzE5LCJleHAiOjE3MjY1MDI2MTl9.cmbFCvK2ppVi4xNPGVaP5qkIPbxINp2WMk_VAaWuvM3rW1WQDPMZFEANPRrQU6h-",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"toUsername\" : \"kevinjr@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/read",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"read"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddUserEditorAccess",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NTAyMzE5LCJleHAiOjE3MjY1MDI2MTl9.cmbFCvK2ppVi4xNPGVaP5qkIPbxINp2WMk_VAaWuvM3rW1WQDPMZFEANPRrQU6h-",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/share/kevinjr@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"kevinjr@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUserReadAccess",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NTAyMzE5LCJleHAiOjE3MjY1MDI2MTl9.cmbFCvK2ppVi4xNPGVaP5qkIPbxINp2WMk_VAaWuvM3rW1WQDPMZFEANPRrQU6h-",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"toUsername\" : \"kevinjr@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/read/delete/kevinjr@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"read",
+						"delete",
+						"kevinjr@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUserEditorAccess",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiIsIlJPTEVfQURNSU4iXSwic3ViIjoiZXJ3aW5AZ21haWwuY29tIiwiaWF0IjoxNzI2NTAyMzE5LCJleHAiOjE3MjY1MDI2MTl9.cmbFCvK2ppVi4xNPGVaP5qkIPbxINp2WMk_VAaWuvM3rW1WQDPMZFEANPRrQU6h-",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"toUsername\" : \"kevinjr@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/read/delete/kevinjr@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"read",
+						"delete",
+						"kevinjr@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllTodolist_ReadAccess",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJrZXZpbmpyQGdtYWlsLmNvbSIsImlhdCI6MTcyNjUwMjM0MiwiZXhwIjoxNzI2NTAyNjQyfQ.IB9TZ3DflxrbBZq01SUKmNDgNXIGz4yzc-HLTIxWIkbExm2C3kbvEAMZh87Pu1BC",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"toUsername\" : \"erwin@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/read/0/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"read",
+						"0",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllTodolist_ReadAccessByStatus",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJrZXZpbmpyQGdtYWlsLmNvbSIsImlhdCI6MTcyNjUwMjM0MiwiZXhwIjoxNzI2NTAyNjQyfQ.IB9TZ3DflxrbBZq01SUKmNDgNXIGz4yzc-HLTIxWIkbExm2C3kbvEAMZh87Pu1BC",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"toUsername\" : \"erwin@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/read/0/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"read",
+						"0",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTodolist_ReadAccessById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJrZXZpbmpyQGdtYWlsLmNvbSIsImlhdCI6MTcyNjUwMjM0MiwiZXhwIjoxNzI2NTAyNjQyfQ.IB9TZ3DflxrbBZq01SUKmNDgNXIGz4yzc-HLTIxWIkbExm2C3kbvEAMZh87Pu1BC",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"toUsername\" : \"erwin@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/read/15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"read",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCountReadAccess",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJrZXZpbmpyQGdtYWlsLmNvbSIsImlhdCI6MTcyNjUwMjM0MiwiZXhwIjoxNzI2NTAyNjQyfQ.IB9TZ3DflxrbBZq01SUKmNDgNXIGz4yzc-HLTIxWIkbExm2C3kbvEAMZh87Pu1BC",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"toUsername\" : \"erwin@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/count/erwin@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"count",
+						"erwin@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCountEditorAccess",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJrZXZpbmpyQGdtYWlsLmNvbSIsImlhdCI6MTcyNjUwMjM0MiwiZXhwIjoxNzI2NTAyNjQyfQ.IB9TZ3DflxrbBZq01SUKmNDgNXIGz4yzc-HLTIxWIkbExm2C3kbvEAMZh87Pu1BC",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"toUsername\" : \"erwin@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/count/erwin@gmail.com/Uncompleted",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"count",
+						"erwin@gmail.com",
+						"Uncompleted"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchUserReadAccess",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJrZXZpbmpyQGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3MjE5MCwiZXhwIjoxNzI2NTcyNDkwfQ.fh7bI9q8zZkIAZ25O4RVNBHEyGOuRx_p5pgF6wr7n0UzuRvcdHDr_nTfgnakG9-q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"toUsername\" : \"erwin@gmail.com\",\r\n    \"task\" : \"Menon\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/read/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"read",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchUserReadAccessByStatus",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJrZXZpbmpyQGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3MjE5MCwiZXhwIjoxNzI2NTcyNDkwfQ.fh7bI9q8zZkIAZ25O4RVNBHEyGOuRx_p5pgF6wr7n0UzuRvcdHDr_nTfgnakG9-q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"toUsername\" : \"erwin@gmail.com\",\r\n    \"task\" : \"Mem\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/read/search/Uncompleted",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"read",
+						"search",
+						"Uncompleted"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateTodolistUserEditorAccess",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJrZXZpbmpyQGdtYWlsLmNvbSIsImlhdCI6MTcyNjYyNjM4NywiZXhwIjoxNzI2NjI2Njg3fQ.61fpFGdc78qgM714NPiZNIHVNasMNEVxaG9smcbvlmCHIKFgujjS9Nu2cl4fwfK9",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task\" : \"Mancing Ikan\",\r\n    \"note\" : \"Ikan patin\",\r\n    \"status\" : \"Uncompleted\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/create/erwin@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"create",
+						"erwin@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditTodolistUserEditorAccess",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJrZXZpbmpyQGdtYWlsLmNvbSIsImlhdCI6MTcyNjU3NzQzOSwiZXhwIjoxNzI2NTc3NzM5fQ.Fpr6Wkh8umsaPOuo1TRiICdoJa0xu0OlfVI6syWwRJF9OEDEUM5kJHp6Ups8UZfa",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task\" : \"Olahraga\",\r\n    \"note\" : \"Jogging 10 km\",\r\n    \"status\" : \"Uncompleted\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/edit/erwin@gmail.com/13",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"edit",
+						"erwin@gmail.com",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteTodolistUserEditorAccess",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzM4NCJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJzdWIiOiJrZXZpbmpyQGdtYWlsLmNvbSIsImlhdCI6MTcyNjUwMjM0MiwiZXhwIjoxNzI2NTAyNjQyfQ.IB9TZ3DflxrbBZq01SUKmNDgNXIGz4yzc-HLTIxWIkbExm2C3kbvEAMZh87Pu1BC",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task\" : \"Olahraga\",\r\n    \"note\" : \"Jogging 10 km\",\r\n    \"status\" : \"Uncompleted\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/share/delete/erwin@gmail.com/15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"share",
+						"delete",
+						"erwin@gmail.com",
+						"15"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
