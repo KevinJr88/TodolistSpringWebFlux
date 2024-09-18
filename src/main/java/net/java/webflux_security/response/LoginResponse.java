@@ -1,4 +1,4 @@
-package net.java.webflux_security.model;
+package net.java.webflux_security.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

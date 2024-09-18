@@ -8,7 +8,6 @@ import org.springframework.data.annotation.Id;
 
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
-
 public class Todolist {
     @Id
     private Long id;
@@ -16,10 +15,18 @@ public class Todolist {
     private String task;
     private String note;
     private String status;
+    private String email;
 
     public Todolist(String task, String note, String status) {
         this.task = task;
         this.note = note;
         this.status = status;
+    }
+
+    public Todolist(String task, String note, String status, String email) {
+        this.task = task;
+        this.note = note;
+        this.status = status;
+        this.email = email;
     }
 }

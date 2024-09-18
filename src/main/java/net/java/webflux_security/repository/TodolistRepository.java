@@ -1,5 +1,6 @@
 package net.java.webflux_security.repository;
 
+import lombok.NonNull;
 import net.java.webflux_security.model.Todolist;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
@@ -10,16 +11,30 @@ import reactor.core.publisher.Mono;
 
 @Repository
 public interface TodolistRepository extends R2dbcRepository<Todolist, Long> {
-    @Query("SELECT * FROM todolist WHERE status = :status AND task LIKE '%' || :task || '%'")
-    Flux<Todolist> findAllByTaskContainingAndStatus(String task, String status);
-    @Query("SELECT * FROM todolist WHERE status = :status ORDER BY todolist.id DESC LIMIT :pageSize OFFSET :offset")
-    Flux<Todolist> findAllByStatus(String status, int offset, int pageSize);
-    @Query("SELECT COUNT(*) FROM todolist WHERE status = :status" )
-    Mono<Long> countByStatus(String status);
-    @Query("SELECT COUNT(*) FROM todolist" )
-    Mono<Long> countAll();
-    @Query("SELECT * FROM todolist WHERE task LIKE '%' || :task || '%'")
-    Flux<Todolist> findAllByTaskContaining(String task);
-    @Query("SELECT * FROM todolist ORDER BY todolist.id DESC LIMIT :pageSize OFFSET :offset")
-    Flux<Todolist> findAllPagination(int offset, int pageSize);
+
+    @Query("SELECT * FROM todolist WHERE email = :username")
+    Flux<Todolist> findAllByEmail(String username);
+
+    @Query("SELECT * FROM todolist WHERE email = :username ORDER BY todolist.id DESC LIMIT :pageSize OFFSET :offset")
+    Flux<Todolist> findAllPagination(String username, int offset, int pageSize);
+
+    @Query("SELECT * FROM todolist WHERE status = :status AND email = :username ORDER BY todolist.id DESC LIMIT :pageSize OFFSET :offset")
+    Flux<Todolist> findAllByStatus(String username, String status, int offset, int pageSize);
+
+    @Query("SELECT * FROM todolist WHERE email = :username AND id = :id LIMIT 1")
+    Mono<Todolist> findByIdAndUsername(String username, Long id);
+
+    @Query("SELECT * FROM todolist WHERE email = :username AND status = :status AND task LIKE '%' || :task || '%'")
+    Flux<Todolist> findAllByTaskContainingAndStatus(String username, String task, String status);
+
+    @Query("SELECT * FROM todolist WHERE email = :username AND task LIKE '%' || :task || '%'")
+    Flux<Todolist> findAllByTaskContaining(String username, String task);
+
+    @Query("SELECT COUNT(*) FROM todolist WHERE email = :username AND status = :status" )
+    Mono<Long> countByStatus(String username, String status);
+
+    @Query("SELECT COUNT(*) FROM todolist WHERE email = :username" )
+    Mono<Long> countAll(String username);
+
+
 }

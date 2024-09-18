@@ -3,8 +3,8 @@ package net.java.webflux_security.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import net.java.webflux_security.library.ApiResponse;
-import net.java.webflux_security.model.LoginRequest;
-import net.java.webflux_security.model.LoginResponse;
+import net.java.webflux_security.dto.LoginRequestDto;
+import net.java.webflux_security.response.LoginResponse;
 import net.java.webflux_security.model.Userdata;
 import net.java.webflux_security.security.CustomEncoder;
 import net.java.webflux_security.service.UserService;
@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Validated
 @RequestMapping("/api")
-public class LoginSignup {
+public class AuthController {
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -43,10 +43,9 @@ public class LoginSignup {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Mono<ResponseEntity<?>> login(@RequestBody LoginRequest request) {
+    public Mono<ResponseEntity<?>> login(@RequestBody LoginRequestDto request) {
         return userService.findByUsername(request.getUsername()).map((userDetails) -> {
             log.info("username found");
-
             if (passwordEncoder.encode(request.getPassword()).equals(userDetails.getPassword())) {
 
                 log.info("Sukses login");
@@ -84,8 +83,6 @@ public class LoginSignup {
                     }
                 }));
     }
-
-
 
 }
 

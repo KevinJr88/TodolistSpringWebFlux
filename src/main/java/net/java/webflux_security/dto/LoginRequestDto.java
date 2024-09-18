@@ -1,4 +1,4 @@
-package net.java.webflux_security.model;
+package net.java.webflux_security.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
 
-public class LoginRequest {
+public class LoginRequestDto {
 	private String username;
 	private String password;
 

@@ -17,38 +17,26 @@ public class TodolistService {
     @Autowired
     TodolistRepository todolistRepository;
 
-    public Flux<Todolist> findAll() {
-        return todolistRepository.findAll();
+    public Flux<Todolist> findAllByUsername(String username) {
+        return todolistRepository.findAllByEmail(username);
     }
 
-    public Flux<Todolist> findByTaskAndStatusContaining(String task, String status) {
-        return todolistRepository.findAllByTaskContainingAndStatus(task, status);
-    }
-
-    public Flux<Todolist> findByTaskContaining(String task) {
-        return todolistRepository.findAllByTaskContaining(task);
-    }
-
-
-    public Flux<Todolist> findAllByStatus(String status, int offset, int pageSize){
-//        PageRequest pageRequest = PageRequest.of(offset, pageSize, Sort.by(Sort.Direction.DESC, "id"));
-        return todolistRepository.findAllByStatus(status, offset, pageSize);
-    }
-
-    public Mono<Long> countByStatus(String status){
-        return  todolistRepository.countByStatus(status);
-    }
-
-    public Mono<Long> countAll(){
-        return  todolistRepository.countAll();
-    }
-
-    public Mono<Todolist> findById(Long id) {
-        return todolistRepository.findById(id);
+    public Flux<Todolist> findTodolistWithPagination(String username, int offset, int pageSize){
+        int tempOffset = offset * pageSize;
+        return todolistRepository.findAllPagination(username, tempOffset, pageSize);
     }
 
     public Mono<Todolist> save(Todolist todolistReq) {
         return todolistRepository.save(todolistReq);
+    }
+
+    public Flux<Todolist> findAllByStatus(String username, String status, int offset, int pageSize){
+        int tempOffset = offset * pageSize;
+        return todolistRepository.findAllByStatus(username, status, tempOffset, pageSize);
+    }
+
+    public Mono<Todolist> findById(String username, Long id) {
+        return todolistRepository.findByIdAndUsername(username, id);
     }
 
     public Mono<Todolist> update(Long id, Todolist todolist) {
@@ -66,16 +54,20 @@ public class TodolistService {
         return todolistRepository.deleteById(id);
     }
 
-    public Flux<Todolist> findTodolistWithPagination(int offset, int pageSize){
-
-        return todolistRepository.findAllPagination(offset, pageSize);
+    public Flux<Todolist> findByTaskAndStatusContaining(String username, String task, String status) {
+        return todolistRepository.findAllByTaskContainingAndStatus(username, task, status);
     }
 
-//    public PageImpl<Mono<Todolist>> findTodolistWithPagination(int offset, int pageSize){
-//
-//        Flux<Todolist> todolist = todolistRepository.findAllPagination(offset, pageSize);
-//        return todolist;
-//    }
+    public Flux<Todolist> findByTaskContaining(String username, String task) {
+        return todolistRepository.findAllByTaskContaining(username, task);
+    }
 
+    public Mono<Long> countByStatus(String username, String status){
+        return  todolistRepository.countByStatus(username, status);
+    }
+
+    public Mono<Long> countAll(String username){
+        return  todolistRepository.countAll(username);
+    }
 
 }

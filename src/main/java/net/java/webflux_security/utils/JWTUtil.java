@@ -18,6 +18,7 @@ import java.util.Map;
 @Component
 public class JWTUtil implements Serializable {
 
+
 	private static final long serialVersionUID = 1L;
 	
 	@Value("${springbootwebflux.jjwt.secret}")
@@ -67,5 +68,6 @@ public class JWTUtil implements Serializable {
 	public Boolean validateToken(String token) {
 		return !isTokenExpired(token);
 	}
+
 
 }

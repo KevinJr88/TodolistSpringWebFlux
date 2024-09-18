@@ -2,6 +2,10 @@ package net.java.webflux_security.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +22,8 @@ import java.util.stream.Collectors;
 /**
  * User model
  */
+@Getter @Setter
+@AllArgsConstructor@NoArgsConstructor
 public class Userdata implements UserDetails {
     @Id
     private Long id;
@@ -35,6 +42,9 @@ public class Userdata implements UserDetails {
     private List<@NotBlank(message = "Role should not be empty")String> roles;
     private Boolean enabled;
 
+    private List<String> readAccess = new ArrayList<>();
+    private List<String> editAccess = new ArrayList<>();
+
     public Userdata(Long id, String firstName, String lastName, String password, String email, String address, List<String> roles ) {
         this.id = id;
         this.firstName = firstName;
@@ -51,9 +61,6 @@ public class Userdata implements UserDetails {
         this.email = email;
         this.password = password;
         this.roles = asList;
-    }
-
-    public Userdata() {
     }
 
     public Boolean getEnabled() {
@@ -104,6 +111,13 @@ public class Userdata implements UserDetails {
         this.lastName = lastName;
     }
 
+    public void addReadUserAccess(String username) {
+        this.getReadAccess().add(username);
+    }
+
+    public void addEditorUserAccess(String username) {
+        this.getEditAccess().add(username);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -166,5 +180,13 @@ public class Userdata implements UserDetails {
                 ", roles=" + roles +
                 ", enabled=" + enabled +
                 '}';
+    }
+
+    public void removeReadUserAccess(String toUsername) {
+        this.getReadAccess().remove(toUsername);
+    }
+
+    public void removeEditorUserAccess(String toUsername) {
+        this.getEditAccess().remove(toUsername);
     }
 }

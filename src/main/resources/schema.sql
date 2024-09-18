@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS userdata
     address VARCHAR(100)  NOT NULL,
     email VARCHAR(50) UNIQUE NOT NULL,
     roles VARCHAR [] NOT NULL,
+    read_access VARCHAR [],
+    edit_access VARCHAR [],
     enabled boolean DEFAULT true
 );
 TRUNCATE userdata RESTART IDENTITY;

@@ -11,13 +11,14 @@ import java.security.Principal;
 
 
 @RestController
-public class UserResource {
+public class UserResourceController {
 
 	/**
 	 * Endpoint for all user
 	 * @param principal
 	 * @return
 	 */
+
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public Mono<ResponseEntity<?>> publicUser(Principal principal) {
 		return Mono.just(ResponseEntity.ok(principal.toString()));
@@ -33,4 +34,8 @@ public class UserResource {
 	public Mono<ResponseEntity<?>> user(Principal principal) {
 		return Mono.just(ResponseEntity.ok(principal.toString()));
 	}
+
+
+
+
 }
