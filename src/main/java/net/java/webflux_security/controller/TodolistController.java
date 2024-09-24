@@ -1,20 +1,17 @@
 package net.java.webflux_security.controller;
 
-
 import net.java.webflux_security.dto.TodolistDto;
 import net.java.webflux_security.exception.CustomException;
 import net.java.webflux_security.model.Todolist;
-import net.java.webflux_security.model.Userdata;
 import net.java.webflux_security.service.TodolistService;
-import net.java.webflux_security.service.UserService;
 import net.java.webflux_security.service.UtilService;
 import net.java.webflux_security.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import org.springframework.http.MediaType;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -28,6 +25,12 @@ public class TodolistController {
 
     @Autowired
     JWTUtil jwtUtil;
+
+//    @CrossOrigin(origins = "http://localhost:5173")
+//    @GetMapping()
+//    public Flux<Todolist> getTodolistNoAuth() {
+//        return todolistService.findAll();
+//    }
 
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping
@@ -99,8 +102,18 @@ public class TodolistController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PutMapping("/{id}")
-    public Mono<Todolist> updateTodolist(@PathVariable("id") Long id, @RequestBody Todolist todolistRequest) {
-        return todolistService.update(id,todolistRequest);
+    public Mono<Todolist> updateTodolist(@RequestHeader("Authorization") String token, @PathVariable("id") Long id, @RequestBody TodolistDto todolistRequest) {
+        String jwtToken = token.substring(7);
+        String username = jwtUtil.getUsernameFromToken(jwtToken);
+        String message = util.validation(todolistRequest);
+        if (message.isEmpty()) {
+            return todolistService.update(id,new Todolist(todolistRequest.getTask(), todolistRequest.getNote(), todolistRequest.getStatus(), username));
+        } else {
+            return Mono.error(new CustomException(HttpStatus.BAD_REQUEST, message));
+        }
+
+
+
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
@@ -125,9 +138,5 @@ public class TodolistController {
         String username = jwtUtil.getUsernameFromToken(jwtToken);
         return  todolistService.countAll(username);
     }
-
-    //SHARE ACCESS
-
-
 
 }

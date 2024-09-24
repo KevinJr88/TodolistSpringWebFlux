@@ -1,11 +1,15 @@
 package net.java.webflux_security.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
+import net.java.webflux_security.dto.TodolistDto;
 import net.java.webflux_security.dto.UserShareDto;
+import net.java.webflux_security.exception.CustomException;
 import net.java.webflux_security.model.Todolist;
 import net.java.webflux_security.model.Userdata;
 import net.java.webflux_security.service.UserService;
 import net.java.webflux_security.service.UserShareService;
+import net.java.webflux_security.service.UtilService;
 import net.java.webflux_security.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +17,18 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
+@Slf4j
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api/share")
 public class UserShareController {
     @Autowired
     UserShareService userShareService;
+
+    @Autowired
+    UtilService util;
 
     @Autowired
     JWTUtil jwtUtil;
@@ -33,16 +43,29 @@ public class UserShareController {
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
-    @DeleteMapping("/read/delete/{username}")
-    public Mono<Userdata> deleteUserReadAccess(@RequestHeader("Authorization") String token, @PathVariable("username") String toUsername) {
+    @PutMapping("/read/permission")
+    public Mono<Userdata> addUserReadPermission(@RequestHeader("Authorization") String token, @RequestBody UserShareDto userShareDto) {
         String jwtToken = token.substring(7);
         String fromUsername = jwtUtil.getUsernameFromToken(jwtToken);
 
-        return userShareService.deleteReadUserAccess(fromUsername, toUsername);
+        return userShareService.updateReadUserPermission(fromUsername, userShareDto.getToUsername());
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping("/read/permission")
+    public Mono<List<String>> getUserReadPermission(@RequestHeader("Authorization") String token) {
+        String jwtToken = token.substring(7);
+        String username = jwtUtil.getUsernameFromToken(jwtToken);
+        return userShareService.getReadUserPermission(username);
+    }
 
-
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping("/read/access")
+    public Mono<List<String>> getUserReadAccess(@RequestHeader("Authorization") String token) {
+        String jwtToken = token.substring(7);
+        String username = jwtUtil.getUsernameFromToken(jwtToken);
+        return userShareService.getReadUserAccess(username);
+    }
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PutMapping("/editor")
@@ -54,12 +77,64 @@ public class UserShareController {
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping("/editor/permission")
+    public Mono<List<String>> getUserEditorPermission(@RequestHeader("Authorization") String token) {
+        String jwtToken = token.substring(7);
+        String username = jwtUtil.getUsernameFromToken(jwtToken);
+        return userShareService.getEditorUserPermission(username);
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PutMapping("/editor/permission")
+    public Mono<Userdata> addUserEditorPermission(@RequestHeader("Authorization") String token, @RequestBody UserShareDto userShareDto) {
+        String jwtToken = token.substring(7);
+        String fromUsername = jwtUtil.getUsernameFromToken(jwtToken);
+
+        return userShareService.updateEditorUserPermission(fromUsername, userShareDto.getToUsername());
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping("/editor/access")
+    public Mono<List<String>> getUserEditorAccess(@RequestHeader("Authorization") String token) {
+        String jwtToken = token.substring(7);
+        String username = jwtUtil.getUsernameFromToken(jwtToken);
+        return userShareService.getEditorUserAccess(username);
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @DeleteMapping("/read/delete/{username}")
+    public Mono<Userdata> deleteUserReadAccess(@RequestHeader("Authorization") String token, @PathVariable("username") String toUsername) {
+        String jwtToken = token.substring(7);
+        String fromUsername = jwtUtil.getUsernameFromToken(jwtToken);
+
+        return userShareService.deleteReadUserAccess(fromUsername, toUsername);
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @DeleteMapping("/read/permission/delete/{username}")
+    public Mono<Userdata> deleteUserReadPermission(@RequestHeader("Authorization") String token, @PathVariable("username") String toUsername) {
+        String jwtToken = token.substring(7);
+        String fromUsername = jwtUtil.getUsernameFromToken(jwtToken);
+
+        return userShareService.deleteReadUserPermission(fromUsername, toUsername);
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
     @DeleteMapping("/editor/delete/{username}")
     public Mono<Userdata> deleteUserEditorAccess(@RequestHeader("Authorization") String token, @PathVariable("username") String toUsername) {
         String jwtToken = token.substring(7);
         String fromUsername = jwtUtil.getUsernameFromToken(jwtToken);
 
         return userShareService.deleteEditorUserAccess(fromUsername, toUsername);
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @DeleteMapping("/editor/permission/delete/{username}")
+    public Mono<Userdata> deleteUserEditorPermission(@RequestHeader("Authorization") String token, @PathVariable("username") String toUsername) {
+        String jwtToken = token.substring(7);
+        String fromUsername = jwtUtil.getUsernameFromToken(jwtToken);
+
+        return userShareService.deleteEditorUserPermission(fromUsername, toUsername);
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
@@ -110,25 +185,35 @@ public class UserShareController {
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/create/{username}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Todolist> addTodolistEditorAccess(@RequestHeader("Authorization") String token, @PathVariable("username") String toUsername, @RequestBody Todolist todolist) {
+    public Mono<Todolist> addTodolistEditorAccess(@RequestHeader("Authorization") String token, @PathVariable("username") String toUsername, @RequestBody TodolistDto todolistRequest) {
         String jwtToken = token.substring(7);
         String fromUsername = jwtUtil.getUsernameFromToken(jwtToken);
-
-        return userShareService.addTodolistEditorAccess(fromUsername, toUsername, new Todolist(todolist.getTask(), todolist.getNote(), todolist.getStatus(), toUsername));
+        String message = util.validation(todolistRequest);
+        if (message.isEmpty()) {
+            return userShareService.addTodolistEditorAccess(fromUsername, toUsername, new Todolist(todolistRequest.getTask(), todolistRequest.getNote(), todolistRequest.getStatus(), toUsername));
+        } else {
+            return Mono.error(new CustomException(HttpStatus.BAD_REQUEST, message));
+        }
     }
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PutMapping("/edit/{username}/{id}")
-    public Mono<Todolist> editTodolistEditorAccess(@RequestHeader("Authorization") String token, @PathVariable("username") String toUsername, @PathVariable("id") Long id, @RequestBody Todolist todolist) {
+    public Mono<Todolist> editTodolistEditorAccess(@RequestHeader("Authorization") String token, @PathVariable("username") String toUsername, @PathVariable("id") Long id, @RequestBody TodolistDto todolistRequest) {
         String jwtToken = token.substring(7);
         String fromUsername = jwtUtil.getUsernameFromToken(jwtToken);
+        String message = util.validation(todolistRequest);
+        if (message.isEmpty()) {
+            return userShareService.editTodolistEditorAccess(fromUsername, toUsername, new Todolist(todolistRequest.getTask(), todolistRequest.getNote(), todolistRequest.getStatus(), toUsername), id);
+        } else {
+            return Mono.error(new CustomException(HttpStatus.BAD_REQUEST, message));
+        }
 
-        return userShareService.editTodolistEditorAccess(fromUsername, toUsername, todolist, id);
+
     }
 
 
     @CrossOrigin(origins = "http://localhost:5173")
-    @PutMapping("/delete/{username}/{id}")
+    @DeleteMapping("/delete/{username}/{id}")
     public Mono<Userdata> deleteTodolistEditorAccess(@RequestHeader("Authorization") String token, @PathVariable("username") String toUsername, @PathVariable("id") Long id) {
         String jwtToken = token.substring(7);
         String fromUsername = jwtUtil.getUsernameFromToken(jwtToken);

@@ -24,10 +24,10 @@ public interface TodolistRepository extends R2dbcRepository<Todolist, Long> {
     @Query("SELECT * FROM todolist WHERE email = :username AND id = :id LIMIT 1")
     Mono<Todolist> findByIdAndUsername(String username, Long id);
 
-    @Query("SELECT * FROM todolist WHERE email = :username AND status = :status AND task LIKE '%' || :task || '%'")
+    @Query("SELECT * FROM todolist WHERE email = :username AND status = :status AND task ILIKE '%' || :task || '%'")
     Flux<Todolist> findAllByTaskContainingAndStatus(String username, String task, String status);
 
-    @Query("SELECT * FROM todolist WHERE email = :username AND task LIKE '%' || :task || '%'")
+    @Query("SELECT * FROM todolist WHERE email = :username AND task ILIKE '%' || :task || '%'")
     Flux<Todolist> findAllByTaskContaining(String username, String task);
 
     @Query("SELECT COUNT(*) FROM todolist WHERE email = :username AND status = :status" )
@@ -36,5 +36,6 @@ public interface TodolistRepository extends R2dbcRepository<Todolist, Long> {
     @Query("SELECT COUNT(*) FROM todolist WHERE email = :username" )
     Mono<Long> countAll(String username);
 
-
+    @Query("SELECT * FROM todolist")
+    Flux<Todolist> findAllData();
 }

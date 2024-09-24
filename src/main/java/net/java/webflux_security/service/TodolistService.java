@@ -3,13 +3,11 @@ package net.java.webflux_security.service;
 import net.java.webflux_security.model.Todolist;
 import net.java.webflux_security.repository.TodolistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.Optional;
 
 @Service
@@ -68,6 +66,10 @@ public class TodolistService {
 
     public Mono<Long> countAll(String username){
         return  todolistRepository.countAll(username);
+    }
+
+    public Flux<Todolist> findAll() {
+        return todolistRepository.findAllData().delayElements(Duration.ofSeconds(1));
     }
 
 }

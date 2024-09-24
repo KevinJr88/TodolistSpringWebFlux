@@ -1,6 +1,7 @@
 package net.java.webflux_security.service;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import net.java.webflux_security.exception.CustomException;
 import net.java.webflux_security.model.Todolist;
 import net.java.webflux_security.model.Userdata;
@@ -12,8 +13,11 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class UserShareService {
     @Autowired
@@ -29,6 +33,9 @@ public class UserShareService {
                 .flatMap(userFind -> {
                     if (userFind.isPresent()) {
                         Userdata user = userFind.get();
+                        if(toUsername.equals(fromUsername)) {
+                            return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "Cannot add self as read access"));
+                        }
                         if (user.getReadAccess().contains(toUsername)) {
                             return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "Read access for this user already exists"));
                         }
@@ -39,22 +46,122 @@ public class UserShareService {
                 });
     }
 
+    public Mono<List<String>> getReadUserAccess(String username) {
+        return userRepository.findByEmail(username)
+                .map(Optional::of)
+                .defaultIfEmpty(Optional.empty())
+                .flatMap(userFind -> {
+                    if (userFind.isPresent()) {
+                        return Mono.just(userFind.get().getReadAccess());
+                    } else {
+                        return Mono.error(new CustomException(HttpStatus.NOT_FOUND, "User not found"));
+                    }
+                });
+    }
+
+    public Mono<List<String>> getEditorUserAccess(String username) {
+        return userRepository.findByEmail(username)
+                .map(Optional::of)
+                .defaultIfEmpty(Optional.empty())
+                .flatMap(userFind -> {
+                    if (userFind.isPresent()) {
+                        return Mono.just(userFind.get().getEditAccess());
+                    } else {
+                        return Mono.error(new CustomException(HttpStatus.NOT_FOUND, "User not found"));
+                    }
+                });
+    }
+
+
+    public Mono<Userdata> updateReadUserPermission(String fromUsername,  String toUsername) {
+        return userRepository.findByEmail(toUsername)
+                .map(Optional::of)
+                .defaultIfEmpty(Optional.empty())
+                .flatMap(userFind -> {
+                    if (userFind.isPresent()) {
+                        Userdata user = userFind.get();
+                        if(toUsername.equals(fromUsername)) {
+                            return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "Cannot add self as read access"));
+                        }
+                        if (user.getReadPermission().contains(fromUsername)) {
+                            return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "Read permission for this user already exists"));
+                        }
+                        user.addReadUserPermission(fromUsername);
+                        return userRepository.save(user);
+                    }
+                    return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "User not found"));
+                });
+    }
+
+    public Mono<List<String>> getReadUserPermission(String username) {
+        return userRepository.findByEmail(username)
+                .map(Optional::of)
+                .defaultIfEmpty(Optional.empty())
+                .flatMap(userFind -> {
+                    if (userFind.isPresent()) {
+                        return Mono.just(userFind.get().getReadPermission());
+                    } else {
+                        return Mono.error(new CustomException(HttpStatus.NOT_FOUND, "User not found"));
+                    }
+                });
+    }
+
     public Mono<Userdata> updateEditorUserAccess(String fromUsername, String toUsername) {
         return userRepository.findByEmail(fromUsername).map(Optional::of).defaultIfEmpty(Optional.empty())
                 .flatMap(userFind -> {
                     if(userFind.isPresent()) {
                         Userdata user = userFind.get();
+                        if(toUsername.equals(fromUsername)) {
+                            return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "Cannot add self as read access"));
+                        }
                         if(user.getEditAccess().contains(toUsername)) {
                             return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "Editor access for this user already exists"));
                         }
                         if(user.getReadAccess().contains(toUsername)) {
                             user.removeReadUserAccess(toUsername);
                         }
-                        userFind.get().addReadUserAccess(toUsername);
-                        userFind.get().addEditorUserAccess(toUsername);
-                        return userRepository.save(userFind.get());
+                        user.addReadUserAccess(toUsername);
+                        user.addEditorUserAccess(toUsername);
+                        return userRepository.save(user);
                     }
                     return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "User not found"));
+                });
+    }
+
+    public Mono<Userdata> updateEditorUserPermission(String fromUsername,  String toUsername) {
+        return userRepository.findByEmail(toUsername)
+                .map(Optional::of)
+                .defaultIfEmpty(Optional.empty())
+                .flatMap(userFind -> {
+                    if (userFind.isPresent()) {
+                        Userdata user = userFind.get();
+                        if(toUsername.equals(fromUsername)) {
+                            return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "Cannot add self as read access"));
+                        }
+                        if (user.getEditPermission().contains(fromUsername)) {
+                            return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "Read permission for this user already exists"));
+                        }
+                        if(user.getReadPermission().contains(fromUsername)) {
+                            user.removeReadUserPermission(fromUsername);
+                        }
+                        user.addReadUserPermission(fromUsername);
+                        user.addEditorUserPermission(fromUsername);
+                        return userRepository.save(user);
+                    }
+                    return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "User not found"));
+                });
+    }
+
+    public Mono<List<String>> getEditorUserPermission(String username) {
+        return userRepository.findByEmail(username)
+                .map(Optional::of)
+                .defaultIfEmpty(Optional.empty())
+                .flatMap(userFind -> {
+                    if (userFind.isPresent()) {
+                        return Mono.just(userFind.get().getEditPermission());
+                    } else {
+                        return Mono.error(new CustomException(HttpStatus.NOT_FOUND, "User not found"));
+                    }
                 });
     }
 
@@ -100,8 +207,13 @@ public class UserShareService {
                     if (userFind.isPresent()) {
                         return Flux.fromStream(userFind.get().getReadAccess().stream())
                                 .filter(userAccess -> userAccess.equals(fromUsername))
-                                .flatMap(userAccess -> todolistRepository.findAllPagination(toUsername, offset * pageSize, pageSize))
-                                .switchIfEmpty(Flux.error(new CustomException(HttpStatus.FORBIDDEN, "Access Denied")));
+                                .collectList()
+                                .flatMapMany(userAccessList -> {
+                                    if (userAccessList.isEmpty()) {
+                                        return Flux.error(new CustomException(HttpStatus.FORBIDDEN, "Access Denied"));
+                                    }
+                                    return todolistRepository.findAllPagination(toUsername, offset * pageSize, pageSize);
+                                });
                     } else {
                         return Flux.error(new CustomException(HttpStatus.FORBIDDEN, "User not found"));
                     }
@@ -113,11 +225,18 @@ public class UserShareService {
                 .map(Optional::of)
                 .defaultIfEmpty(Optional.empty())
                 .flatMapMany(userFind -> {
+
                     if (userFind.isPresent()) {
                         return Flux.fromStream(userFind.get().getReadAccess().stream())
                                 .filter(userAccess -> userAccess.equals(fromUsername))
-                                .flatMap(userAccess -> todolistRepository.findAllByStatus(toUsername, status, offset * pageSize, pageSize))
-                                .switchIfEmpty(Flux.error(new CustomException(HttpStatus.FORBIDDEN, "Access Denied")));
+                                .collectList()
+                                .flatMapMany(userAccessList -> {
+                                    if (userAccessList.isEmpty()) {
+                                        return Flux.error(new CustomException(HttpStatus.FORBIDDEN, "Access Denied"));
+                                    }
+                                    return todolistRepository.findAllByStatus(toUsername, status, offset * pageSize, pageSize);
+                                });
+
                     } else {
                         return Flux.error(new CustomException(HttpStatus.FORBIDDEN, "User not found"));
                     }
@@ -206,8 +325,9 @@ public class UserShareService {
                                 .filter(userAccess -> userAccess.equals(fromUsername))
                                 .next() // Get the first element from the Flux
                                 .flatMap(userAccess -> {
-                                    todolistRepository.deleteById(id);
-                                    return Mono.just(userFind.get());
+                                    return todolistRepository.findByIdAndUsername(toUsername, id)
+                                            .flatMap(todolist -> todolistRepository.deleteById(todolist.getId()))
+                                            .then(Mono.just(userFind.get()));
                                 })
                                 .switchIfEmpty(Mono.error(new CustomException(HttpStatus.FORBIDDEN, "Access Denied")));
                     } else {
@@ -264,6 +384,41 @@ public class UserShareService {
                     } else {
                         return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "User not found"));
                     }
+                });
+    }
+
+
+    public Mono<Userdata> deleteReadUserPermission(String fromUsername, String toUsername) {
+        return userRepository.findByEmail(toUsername)
+                .map(Optional::of)
+                .defaultIfEmpty(Optional.empty())
+                .flatMap(userFind -> {
+                    if (userFind.isPresent()) {
+                        Userdata user = userFind.get();
+                        if (user.getReadPermission().contains(fromUsername)) {
+                            user.removeReadUserPermission(fromUsername);
+                            return userRepository.save(user);
+                        }
+                        return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "Read permission for this user does not exist"));
+                    }
+                    return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "User not found"));
+                });
+    }
+
+    public Mono<Userdata> deleteEditorUserPermission(String fromUsername, String toUsername) {
+        return userRepository.findByEmail(toUsername)
+                .map(Optional::of)
+                .defaultIfEmpty(Optional.empty())
+                .flatMap(userFind -> {
+                    if (userFind.isPresent()) {
+                        Userdata user = userFind.get();
+                        if (user.getEditPermission().contains(fromUsername)) {
+                            user.removeEditorUserPermission(fromUsername);
+                            return userRepository.save(user);
+                        }
+                        return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "Editor permission for this user does not exist"));
+                    }
+                    return Mono.error(new CustomException(HttpStatus.FORBIDDEN, "User not found"));
                 });
     }
 }

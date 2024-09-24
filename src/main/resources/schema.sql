@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS userdata
     roles VARCHAR [] NOT NULL,
     read_access VARCHAR [],
     edit_access VARCHAR [],
+    read_permission VARCHAR [],
+    edit_permission VARCHAR [],
     enabled boolean DEFAULT true
 );
 TRUNCATE userdata RESTART IDENTITY;

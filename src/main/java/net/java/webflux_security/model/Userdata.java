@@ -44,6 +44,8 @@ public class Userdata implements UserDetails {
 
     private List<String> readAccess = new ArrayList<>();
     private List<String> editAccess = new ArrayList<>();
+    private List<String> readPermission = new ArrayList<>();
+    private List<String> editPermission = new ArrayList<>();
 
     public Userdata(Long id, String firstName, String lastName, String password, String email, String address, List<String> roles ) {
         this.id = id;
@@ -188,5 +190,18 @@ public class Userdata implements UserDetails {
 
     public void removeEditorUserAccess(String toUsername) {
         this.getEditAccess().remove(toUsername);
+    }
+
+    public void addReadUserPermission(String fromUsername) {
+        this.getReadPermission().add(fromUsername);
+    }
+
+    public void addEditorUserPermission(String fromUsername) {
+        this.getEditPermission().add(fromUsername);
+    }
+
+    public void removeReadUserPermission(String fromUsername) { this.getReadPermission().remove(fromUsername); }
+
+    public void removeEditorUserPermission(String fromUsername) { this.getEditPermission().remove(fromUsername);
     }
 }
